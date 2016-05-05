@@ -7,7 +7,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Adrian Fernandez Lopez"]
   s.email       = 'adrian@adrian-fernandez.net'
   s.files       = ["lib/string_compare.rb"]
-  s.homepage    =
-    'http://rubygems.org/gems/string_compare'
-  s.license       = 'MIT'
+  s.homepage    = 'http://rubygems.org/gems/string_compare'
+  s.license     = 'MIT'
+
+  s.add_development_dependency("mdarray", ["~>0.5.6"])
 end

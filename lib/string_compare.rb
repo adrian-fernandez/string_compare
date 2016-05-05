@@ -1,6 +1,9 @@
 class String
 
-  #https://en.wikipedia.org/wiki/Jaro%E2%80%93Winkler_distance
+
+  # @see https://en.wikipedia.org/wiki/Jaro%E2%80%93Winkler_distance https://en.wikipedia.org/wiki/Jaro%E2%80%93Winkler_distance
+  # @param [String] str2 Text string which you want to compare the similarity
+  # @return [float]
   def jaro_winkler(str2, winkleradjust=true)
     m = 0
     tr = 0
@@ -50,61 +53,47 @@ class String
 
   end
 
-  #https://en.wikipedia.org/wiki/Hamming_distance
-  def hammingDistance(s1, s2)
-      raise "ERROR: Hamming: Non equal lengths" if s1.length != s2.length
-      (s1.chars.zip(s2.chars)).count {|l, r| l != r}
+  # @see https://en.wikipedia.org/wiki/Hamming_distance https://en.wikipedia.org/wiki/Hamming_distance
+  # @param [String] str2 Text string which you want to compare the similarity
+  # @return [float]
+  def hammingDistance(s2)
+      raise "ERROR: Hamming: Non equal lengths" if self.length != s2.length
+      (self.chars.zip(s2.chars)).count {|l, r| l != r}
   end
 
-  #https://es.wikipedia.org/wiki/Distancia_de_Levenshtein
-  def levenshtein(other)
-    other = other.to_s
-    distance = Array.new(self.size + 1, 0)
-    (0..self.size).each do |i|
-      distance[i] = Array.new(other.size + 1)
-      distance[i][0] = i
-    end
-    (0..other.size).each do |j|
-      distance[0][j] = j
-    end
-
-    (1..self.size).each do |i|
-      (1..other.size).each do |j|
-        distance[i][j] = [distance[i - 1][j] + 1,
-                          distance[i][j - 1] + 1,
-                          distance[i - 1][j - 1] + ((self[i - 1] == other[j - 1]) ? 0 : 1)].min
-      end
-    end
-    distance[self.size][other.size]
-  end
-
-  #https://es.wikipedia.org/wiki/Distancia_de_Damerau-Levenshtein
-  def damerau_levenshtein(str1, str2)
-    d = Array.new(str1.size+1){Array.new(str2.size+1)}
-    for i in (0..str1.size)
+  # @see https://es.wikipedia.org/wiki/Distancia_de_Damerau-Levenshtein https://es.wikipedia.org/wiki/Distancia_de_Damerau-Levenshtein
+  # @param [String] str2 Text string which you want to compare the similarity
+  # @return [float]
+  def damerau_levenshtein(str2)
+    d = Array.new(self.size+1){Array.new(str2.size+1)}
+    for i in (0..self.size)
       d[i][0] = i
     end
     for j in (0..str2.size)
       d[0][j] = j 
     end
-    str1.each_char_with_index do |i,c1|
+    self.each_char_with_index do |i,c1|
       str2.each_char_with_index do |j,c2|
         c = (c1 == c2 ? 0 : 1)
         d[i+1][j+1] = [
           d[i][j+1] + 1, #deletion
           d[i+1][j] + 1, #insertion
           d[i][j] + c].min #substitution
-        if (i>0) and (j>0) and (str1[i]==str2[j-1]) and (str1[i-1]==str2[j])
+        if (i>0) and (j>0) and (self[i]==str2[j-1]) and (self[i-1]==str2[j])
           d[i+1][j+1] = [
             d[i+1][j+1],
             d[i-1][j-1] + c].min #transposition
         end
       end
     end
-    d[str1.size][str2.size]
+    d[self.size][str2.size]
   end
 
+  # @param [String] str2 Text string which you want to compare the similarity
+  # @return [float]
   def dice_coefficient(b)
+    require 'set'
+
     a_bigrams = self.each_char.each_cons(2).to_set
     b_bigrams = b.each_char.each_cons(2).to_set
 
@@ -116,16 +105,19 @@ class String
     dice
   end
 
-  #https://en.wikipedia.org/wiki/Cosine_similarity
+  # @see https://en.wikipedia.org/wiki/Cosine_similarity https://en.wikipedia.org/wiki/Cosine_similarity
+  # @param [String] str2 Text string which you want to compare the similarity
+  # @return [float]
   def cosine(str2)
     return 1.0 if self == str2
     return 0.0 if self.empty? || str2.empty?
 
-    # convert both texts to vectors
-    v1 = vector(self)
-    v2 = vector(str2)
+    v1 = Hash.new(0)
+    self.each_char { |c| v1[c] += 1 }
 
-    # calculate the dot product
+    v2 = Hash.new(0)
+    str2.each_char { |c| v2[c] += 1 }
+
     dot_product = 0
 
     v1.each do |k, v|
@@ -139,8 +131,12 @@ class String
     dot_product / magnitude
   end
 
-  #https://en.wikipedia.org/wiki/Needleman%E2%80%93Wunsch_algorithm
+  # @see https://en.wikipedia.org/wiki/Needleman%E2%80%93Wunsch_algorithm https://en.wikipedia.org/wiki/Needleman%E2%80%93Wunsch_algorithm
+  # @param [String] str2 Text string which you want to compare the similarity
+  # @return [float]
   def needle(sequence, reference)
+    require 'mdarray'
+
     gap = -5
     s = { 'AA' => 10,
             'AG' => -1,
