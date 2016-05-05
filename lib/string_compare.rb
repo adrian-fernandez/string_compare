@@ -2,6 +2,7 @@ class String
 
 
   # @see https://en.wikipedia.org/wiki/Jaro%E2%80%93Winkler_distance https://en.wikipedia.org/wiki/Jaro%E2%80%93Winkler_distance
+  # @since 0.0.1
   # @param [String] str2 Text string which you want to compare the similarity
   # @return [float]
   def jaro_winkler(str2, winkleradjust=true)
@@ -54,14 +55,16 @@ class String
   end
 
   # @see https://en.wikipedia.org/wiki/Hamming_distance https://en.wikipedia.org/wiki/Hamming_distance
+  # @since 0.0.1
   # @param [String] str2 Text string which you want to compare the similarity
   # @return [float]
-  def hammingDistance(s2)
-      raise "ERROR: Hamming: Non equal lengths" if self.length != s2.length
-      (self.chars.zip(s2.chars)).count {|l, r| l != r}
+  def hammingDistance(str2)
+      raise "ERROR: Hamming: Non equal lengths" if self.length != str2.length
+      (self.chars.zip(str2.chars)).count {|l, r| l != r}
   end
 
   # @see https://es.wikipedia.org/wiki/Distancia_de_Damerau-Levenshtein https://es.wikipedia.org/wiki/Distancia_de_Damerau-Levenshtein
+  # @since 0.0.1
   # @param [String] str2 Text string which you want to compare the similarity
   # @return [float]
   def damerau_levenshtein(str2)
@@ -89,13 +92,14 @@ class String
     d[self.size][str2.size]
   end
 
+  # @since 0.0.1
   # @param [String] str2 Text string which you want to compare the similarity
   # @return [float]
-  def dice_coefficient(b)
+  def dice_coefficient(str2)
     require 'set'
 
     a_bigrams = self.each_char.each_cons(2).to_set
-    b_bigrams = b.each_char.each_cons(2).to_set
+    b_bigrams = str2.each_char.each_cons(2).to_set
 
     overlap = (a_bigrams & b_bigrams).size
 
@@ -106,6 +110,7 @@ class String
   end
 
   # @see https://en.wikipedia.org/wiki/Cosine_similarity https://en.wikipedia.org/wiki/Cosine_similarity
+  # @since 0.0.1
   # @param [String] str2 Text string which you want to compare the similarity
   # @return [float]
   def cosine(str2)
@@ -132,6 +137,7 @@ class String
   end
 
   # @see https://en.wikipedia.org/wiki/Needleman%E2%80%93Wunsch_algorithm https://en.wikipedia.org/wiki/Needleman%E2%80%93Wunsch_algorithm
+  # @since 0.0.1
   # @param [String] str2 Text string which you want to compare the similarity
   # @return [float]
   def needle(sequence, reference)
