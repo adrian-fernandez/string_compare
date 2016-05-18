@@ -20,21 +20,23 @@ This gem overrides String class adding new functions for the different string co
   str = "String Compare"
   str.jaro_winkler('Srting comparer')
 ```
-https://en.wikipedia.org/wiki/Jaro%E2%80%93Winkler_distance https://en.wikipedia.org/wiki/Jaro%E2%80%93Winkler_distance
+
+[Algorithm info in wikipedia](https://en.wikipedia.org/wiki/Jaro%E2%80%93Winkler_distance)
+
 
 ### Hamming distance
 ```erb
   str = "String Compare"
   str.hamming_distance('Srting comparer')
 ```
-https://en.wikipedia.org/wiki/Hamming_distance https://en.wikipedia.org/wiki/Hamming_distance
+[Algorithm info in wikipedia](https://en.wikipedia.org/wiki/Hamming_distance)
 
 ### Damerau Levenshtein
 ```erb
   str = "String Compare"
   str.damerau_levenshtein('Srting comparer')
 ```
-https://es.wikipedia.org/wiki/Distancia_de_Damerau-Levenshtein https://es.wikipedia.org/wiki/Distancia_de_Damerau-Levenshtein
+[Algorithm info in wikipedia](https://es.wikipedia.org/wiki/Distancia_de_Damerau-Levenshtein)
 
 ### Dice coefficient
 ```erb
@@ -48,7 +50,7 @@ https://es.wikipedia.org/wiki/Distancia_de_Damerau-Levenshtein https://es.wikipe
   str.cosine('Srting comparer')
 ```
 
-https://en.wikipedia.org/wiki/Cosine_similarity https://en.wikipedia.org/wiki/Cosine_similarity
+[Algorithm info in wikipedia](https://en.wikipedia.org/wiki/Cosine_similarity https://en.wikipedia.org/wiki/Cosine_similarity)
 
 ### Needleman Wunsch
 ```erb
@@ -56,7 +58,7 @@ https://en.wikipedia.org/wiki/Cosine_similarity https://en.wikipedia.org/wiki/Co
   str.needle('Srting comparer')
 ```
 
-https://en.wikipedia.org/wiki/Needleman%E2%80%93Wunsch_algorithm https://en.wikipedia.org/wiki/Needleman%E2%80%93Wunsch_algorithm
+[Algorithm info in wikipedia](https://en.wikipedia.org/wiki/Needleman%E2%80%93Wunsch_algorithm)
 
 ## Author
 
