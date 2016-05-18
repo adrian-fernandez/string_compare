@@ -61,6 +61,7 @@ This gem overrides String class adding new functions for the different string co
 [Algorithm info in wikipedia](https://en.wikipedia.org/wiki/Needleman%E2%80%93Wunsch_algorithm)
 
 ## Author
+---------
 
 Adrián Fernández <adrian@adrian-fernandez.net>
 
